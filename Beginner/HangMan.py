@@ -3,43 +3,58 @@ from random_word import RandomWords
 
 
 def get_random_word():
-    r_word = 'Random'
-    try:
-        r_word = RandomWords()
-        r = r_word.get_random_word()
-    finally:
-        print(r_word)
+    r_word = RandomWords()
+    print("Loading game ", end='')
+    random_word = r_word.get_random_word()
+    while len(random_word) != 6:
+        print('.', end='')
+        try:
+            random_word = r_word.get_random_word()
+        except:
+            pass
+    return random_word
 
 
-def print_hangman_state(strike_num, random_word):
+def print_hangman_state(strike_num):
     if 0 <= strike_num < len(HANGMANPICS):
         print(HANGMANPICS[strike_num])
-        for i in range(len(random_word)):
-            pass
     else:
         print('invalid state')
 
 
-def run_step(random_word):
-    letter_input = input('Please enter a letter :')
-    correct_count = 0
+def run_step(random_list, random_word):
+    letter_input = input('Please enter a letter : ')
     if letter_input in random_word:
         print('Correct')
-    hidden_word = ['_'] * len(random_word)
-    for i in range(len(random_word)):
-        word_idx = random_word.index(random_word)
-        if letter_input in random_word:
-            hidden_word[4] = letter_input
-            print(hidden_word)
-            correct_count += 1
-    if correct_count != len(random_word):
+        random_list[random_word.index(letter_input)] = letter_input
+        print(random_list)
         return True
     else:
+        print('Incorrect')
+        print(random_list)
         return False
-
 
 
 if __name__ == '__main__':
     random_word = get_random_word()
+    print(random_word)
+    false_guesse = 0
+    print('Go!')
+    random_list = ["_"] * len(random_word)
+    print_hangman_state(false_guesse)
+    while True:
+        if run_step(random_list, random_word):
+            pass
+        else:
+            false_guesse += 1
+            print_hangman_state(false_guesse)
+        if len(random_word) == false_guesse:
+            print('You looser!')
+            break
+        elif '_' not in random_list:
+            print('You won! Nice.')
+            break
+
+
 
 
