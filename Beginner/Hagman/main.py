@@ -37,7 +37,6 @@ def run_step(random_list, random_word):
 
 if __name__ == '__main__':
     random_word = get_random_word()
-    print(random_word)
     false_guesse = 0
     print('Go!')
     random_list = ["_"] * len(random_word)
