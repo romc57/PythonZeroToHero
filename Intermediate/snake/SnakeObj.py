@@ -25,7 +25,7 @@ class Snake:
             self.snake.append(square_obj)
 
     def move(self):
-        time.sleep(0.5)
+        time.sleep(0.3)
         for i in range(self.size -1 ,0 ,-1):
             self.snake[i].goto(self.snake[i -1].xcor(), self.snake[i -1].ycor())
         self.snake[0].forward(20)
@@ -57,12 +57,12 @@ class Snake:
         return False
 
     def eating_this(self, pos):
-        if math.dist(list(self.get_location()), list(pos)) < 100:
+        if math.dist(list(self.get_location()), list(pos)) < 30:
             square_obj = Turtle(shape="square")
             square_obj.color("white")
             square_obj.penup()
             square_obj.shapesize(stretch_wid=1, stretch_len=1)
-            square_obj.goto(self.snake[-1].xcor() -10 , self.snake[-1].ycor() - 10)
+            square_obj.goto(self.snake[-1].xcor(), self.snake[-1].ycor())
             self.snake.append(square_obj)
             self.size += 1
             return True
