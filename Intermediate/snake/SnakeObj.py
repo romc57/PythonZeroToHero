@@ -57,7 +57,7 @@ class Snake:
         return False
 
     def eating_this(self, pos):
-        if math.dist(list(self.get_location()), list(pos)) < 30:
+        if math.dist(list(self.get_location()), list(pos)) < 3`0:
             square_obj = Turtle(shape="square")
             square_obj.color("white")
             square_obj.penup()
