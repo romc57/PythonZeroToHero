@@ -11,7 +11,10 @@ class Food(Turtle):
         self.set_pos()
 
     def set_pos(self):
-        self.pos = (randint(-250, 250), randint(-250, 250))
+        # Align to 20px grid and keep within safe bounds
+        x = randint(-13, 13) * 20
+        y = randint(-13, 13) * 20
+        self.pos = (x, y)
         self.goto(self.pos[0], self.pos[1])
 
     def get_pos(self):

@@ -1,5 +1,4 @@
 from turtle import Turtle
-import time
 import math
 
 UP = 90
@@ -7,28 +6,28 @@ RIGHT = 0
 DOWN = 270
 LEFT = 180
 
+MOVE_DISTANCE = 20
+
 class Snake:
 
     def __init__(self, size=3):
-        self.size=size
         self.snake = list()
-        self.create_snake()
+        self.create_snake(size)
 
-    def create_snake(self):
-        for i in range(self.size):
+    def create_snake(self, size):
+        for i in range(size):
             square_obj = Turtle(shape="square")
             square_obj.color("white")
             square_obj.penup()
             square_obj.shapesize(stretch_wid=1, stretch_len=1)
-            square_obj.goto(-(20 * i),0)
+            square_obj.goto(-(MOVE_DISTANCE * i),0)
 
             self.snake.append(square_obj)
 
     def move(self):
-        time.sleep(0.3)
-        for i in range(self.size -1 ,0 ,-1):
+        for i in range(len(self.snake) - 1 , 0 , -1):
             self.snake[i].goto(self.snake[i -1].xcor(), self.snake[i -1].ycor())
-        self.snake[0].forward(20)
+        self.snake[0].forward(MOVE_DISTANCE)
 
     def turn_left(self):
         if self.snake[0].heading() != RIGHT:
@@ -57,13 +56,20 @@ class Snake:
         return False
 
     def eating_this(self, pos):
-        if math.dist(list(self.get_location()), list(pos)) < 3`0:
-            square_obj = Turtle(shape="square")
-            square_obj.color("white")
-            square_obj.penup()
-            square_obj.shapesize(stretch_wid=1, stretch_len=1)
-            square_obj.goto(self.snake[-1].xcor(), self.snake[-1].ycor())
-            self.snake.append(square_obj)
-            self.size += 1
+        if math.dist(list(self.get_location()), list(pos)) < 30:
+            self.extend()
             return True
         return False
+
+    def extend(self):
+        tail = self.snake[-1]
+        square_obj = Turtle(shape="square")
+        square_obj.color("white")
+        square_obj.penup()
+        square_obj.shapesize(stretch_wid=1, stretch_len=1)
+        square_obj.goto(tail.xcor(), tail.ycor())
+        self.snake.append(square_obj)
+
+    @property
+    def size(self):
+        return len(self.snake)
